@@ -1,0 +1,15 @@
+{
+  "name": "proxy",
+  "version": "0.2.0",
+  "description": "A simple server proxy",
+  "main": "app.js",
+  "dependencies": {
+    "http-proxy": "~0.10.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kiril Vatev <vatev.1@gmail.com>",
+  "license": "MIT"
+}
