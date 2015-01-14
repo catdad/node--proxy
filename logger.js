@@ -1,10 +1,12 @@
+/* jshint node: true */
+
 //return current timestamp in formatted string
 var timestamp = function(){
 	var padder = function(val, n){
 		n = n || 2;
 		while(val.toString().length < n){ val = '0'+val; }
 		return val;
-	}
+	};
 	
 	//get current date/time
 	var date = new Date();
@@ -16,12 +18,12 @@ var timestamp = function(){
 		padder(date.getSeconds()),
 		padder(date.getMilliseconds(), 3)
 	].join(':');
-}
+};
 
 //timestamped log
 var logger = function(){
 	console.log.call(console, timestamp() + " -- " + [].join.call(arguments, " - "));
-}
+};
 
 //return requesting IP address
 function ipParse(req){
@@ -37,4 +39,4 @@ module.exports = {
 	timestamp: timestamp,
 	ip: ipParse,
 	url: returnUrl
-}
+};
