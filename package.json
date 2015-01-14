@@ -1,6 +1,6 @@
 {
   "name": "proxy",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A simple server proxy",
   "main": "app.js",
   "dependencies": {
@@ -8,7 +8,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "Kiril Vatev <vatev.1@gmail.com>",
   "license": "MIT"
