@@ -4,11 +4,7 @@ var http = require("http");
 var httpProxy = require("http-proxy");
 var logger = require("./logger.js");
 
-var proxyList = [{
-    localPort: 8888,
-    remoteHost: '127.0.0.1',
-    remotePort: 80
-}];
+var proxyList = require('./config.json');
 
 function registerProxy(localPort, remoteHost, remotePort) {
 	// Create a proxy server with custom application logic
