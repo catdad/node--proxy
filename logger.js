@@ -33,10 +33,24 @@ function ipParse(req){
 //return decoded URL
 function returnUrl(req){ return decodeURIComponent(req.url); }
 
-//create exports
-module.exports = {
-	log: logger,
+var returnValue = {
+    log: logger,
 	timestamp: timestamp,
 	ip: ipParse,
 	url: returnUrl
 };
+
+var colorPolyfillNames = [ 
+    'red', 'green', 'yellow',
+    'blue', 'magenta', 'cyan', 
+    'white', 'gray', 'dim'
+];
+
+colorPolyfillNames.forEach(function(name){
+    returnValue[name] = function(){
+        return returnValue;
+    };
+});
+
+//create exports
+module.exports = returnValue;
