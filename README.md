@@ -15,6 +15,8 @@ A super simple proxy for when you need one in a pinch.
 }
 ```
 
+_This will result in sending all `localhost:8888` traffic to `127.0.0.1:80`._
+
 You can add multiple proxy targets, as long as they all have a unique local port.
 
 There is no magic here, and most of the heavy lifting is done by third-party libraries. However, it takes all of one minute to get up and running.
