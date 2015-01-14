@@ -1,6 +1,8 @@
 /* jshint node: true */
 var util = require('util');
 
+// note: Apparently, reset is 0. I still need to test that
+
 // console colors
 // https://gist.github.com/catdad/3cf37a65c2d5660d858e
 var color = {
@@ -16,8 +18,10 @@ var color = {
 };
 
 function getColorFunction(colorObj){
-    var col = '\u001b[' + colorObj[0] + 'm',
-        reset = '\u001b[' + colorObj[1] + 'm';
+    var col = '\x1b[' + colorObj[0] + 'm',
+        reset = '\x1b[' + colorObj[1] + 'm';
+//    var col = '\u001b[' + colorObj[0] + 'm',
+//        reset = '\u001b[' + colorObj[1] + 'm';
     
     return function(str){
         return col + str + reset;
@@ -27,7 +31,6 @@ function getColorFunction(colorObj){
 for (var key in color) {
     color[key] = getColorFunction(color[key]);
 }
-
 
 //return current timestamp in formatted string
 var timestamp = function(){
@@ -77,7 +80,9 @@ function Logger(colorKey){
     };
     this.ip = ipParse;
     this.url = returnUrl;
-    this.ln = function(){ console.log(''); };
+    this.ln = function() { 
+        console.log('');
+    };
     
     var that = this;
     
