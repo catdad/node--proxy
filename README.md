@@ -7,7 +7,7 @@ A super simple proxy for when you need one in a pinch.
 1. Download [this repo](https://github.com/catdad/node--proxy/archive/master.zip) and unzip it.
 1. Edit `config.json` to add your proxy table, as such:
 
-   ```
+   ```json
    {
         "localPort": 8888,
         "remoteHost": "127.0.0.1",
