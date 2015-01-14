@@ -1,2 +1,18 @@
-# node--proxy
-a super simple proxy for when you need one in a pinch
+# Node Proxy
+A super simple proxy for when you need one in a pinch.
+
+## How to use
+
+1. Install [Node.js](http://nodejs.org/).
+1. Download [this repo](https://github.com/catdad/node--proxy/archive/master.zip) and unzip it.
+1. Edit config.json to add your proxy table, as such:
+
+    {
+        "localPort": 8888,
+        "remoteHost": "127.0.0.1",
+        "remotePort": 80
+    }
+
+1. You can add multiple proty targets, as long as they all have a unique local port.
+
+There is no magic here, and most of the heavy lifting is done by third-party libraries. However, it takes all of one minute to get up and running.
