@@ -2,7 +2,7 @@
 
 var http = require("http");
 var httpProxy = require("http-proxy");
-var logger = require("./logger.js");
+var logger = require("./logger2.js");
 
 var proxyList = require('./config.json');
 
@@ -18,7 +18,7 @@ function registerProxy(localPort, remoteHost, remotePort) {
 		});
 	}).listen(localPort);
 
-	logger.log('local port', localPort, 'sending to', remoteHost + ':' + remotePort);
+	logger.magenta().log('local port', localPort, 'sending to', remoteHost + ':' + remotePort);
 }
 
 proxyList.forEach(function(opts){
