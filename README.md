@@ -9,11 +9,11 @@ A super simple proxy for when you need one in a pinch.
 1. Edit `config.json` to add your proxy table, as such:
 
    ```json
-   {
+   [{
         "localPort": 8888,
         "remoteHost": "127.0.0.1",
         "remotePort": 80
-   }
+   }]
    ```
 
    _This will result in sending all `localhost:8888` traffic to `127.0.0.1:80`._
