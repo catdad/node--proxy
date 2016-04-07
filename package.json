@@ -1,15 +1,15 @@
 {
   "name": "proxy",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "A simple server proxy",
   "main": "app.js",
-  "dependencies": {
-    "http-proxy": "~0.10.3"
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.9.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "Kiril Vatev <vatev.1@gmail.com>",
   "license": "MIT"
