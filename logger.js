@@ -1,4 +1,33 @@
 /* jshint node: true */
+var util = require('util');
+
+// console colors
+// https://gist.github.com/catdad/3cf37a65c2d5660d858e
+var color = {
+    red:     [31, 39],
+    green:   [32, 39],
+    yellow:  [33, 39],
+    blue:    [34, 39],
+    magenta: [35, 39],
+    cyan:    [36, 39],
+    white:   [37, 39],
+    gray:    [90, 39],
+    dim:     [2, 22]
+};
+
+function getColorFunction(colorObj){
+    var col = '\u001b[' + colorObj[0] + 'm',
+        reset = '\u001b[' + colorObj[1] + 'm';
+    
+    return function(str){
+        return col + str + reset;
+    };
+}
+ 
+for (var key in color) {
+    color[key] = getColorFunction(color[key]);
+}
+
 
 //return current timestamp in formatted string
 var timestamp = function(){
@@ -21,8 +50,8 @@ var timestamp = function(){
 };
 
 //timestamped log
-var logger = function(){
-	console.log.call(console, timestamp() + " -- " + [].join.call(arguments, " - "));
+var logString = function() {
+    return util.format.apply(util, arguments);
 };
 
 //return requesting IP address
@@ -33,24 +62,36 @@ function ipParse(req){
 //return decoded URL
 function returnUrl(req){ return decodeURIComponent(req.url); }
 
-var returnValue = {
-    log: logger,
-	timestamp: timestamp,
-	ip: ipParse,
-	url: returnUrl
-};
-
-var colorPolyfillNames = [ 
-    'red', 'green', 'yellow',
-    'blue', 'magenta', 'cyan', 
-    'white', 'gray', 'dim'
-];
-
-colorPolyfillNames.forEach(function(name){
-    returnValue[name] = function(){
-        return returnValue;
+function Logger(colorKey){
+    // use a white default if no key is specified
+    if (!color[colorKey]) { colorKey = 'white'; }
+    
+    this.log = function(){
+        var str = logString.apply(undefined, arguments);
+        console.log(color.cyan(timestamp()), '--', color[colorKey](str));
+        
+        return this;
     };
-});
+    this.timestamp = function(){
+        return timestamp();
+    };
+    this.ip = ipParse;
+    this.url = returnUrl;
+    this.ln = function(){ console.log(''); };
+    
+    var that = this;
+    
+    // augment the object with color formatters
+    function colorLoggerGenerator(key) {
+        return function(){
+            return new Logger(key);
+        };
+    }
+    
+    for (var key in color) {
+        that[key] = colorLoggerGenerator(key);
+    }
+}
 
 //create exports
-module.exports = returnValue;
+module.exports = new Logger();

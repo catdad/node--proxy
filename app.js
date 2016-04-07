@@ -1,26 +1,30 @@
 /* jshint node: true */
 
-var http = require("http");
-var httpProxy = require("http-proxy");
-var logger = require("./logger2.js");
+var http = require('http');
 
 var proxyList = require('./config.json');
+var proxy = require('./proxy');
+var logger = require('./logger');
 
-function registerProxy(localPort, remoteHost, remotePort) {
-	// Create a proxy server with custom application logic
-	httpProxy.createServer(function (req, res, proxy) {
-		logger.log(logger.ip(req) + ' -> ' + remoteHost, req.method, logger.url(req));
-		
-		//proxy config
-		proxy.proxyRequest(req, res, {
-			host: remoteHost,
-			port: remotePort
-		});
-	}).listen(localPort);
+proxyList.forEach(function(config) {
+    var thisProxy = proxy(config);
+    
+    http.createServer(function(req, res) {
+        logger.red().log(
+            logger.ip(req) + ' -> ' + config.remoteHost,
+            req.method,
+            logger.url(req)
+        );
 
-	logger.magenta().log('local port', localPort, 'sending to', remoteHost + ':' + remotePort);
-}
+        thisProxy(req, res, console.log.bind(console));
+    }).listen(config.localPort).on('listening', function() {
+        
+        logger.magenta().log(
+            'local port',
+            config.localPort,
+            'sending to',
+            config.remoteHost + ':' + config.remotePort);
+    });
 
-proxyList.forEach(function(opts){
-	registerProxy(opts.localPort, opts.remoteHost, opts.remotePort);
 });
+
