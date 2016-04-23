@@ -16,7 +16,7 @@ proxyList.forEach(function(config) {
             logger.url(req)
         );
 
-        thisProxy(req, res, console.log.bind(console));
+        thisProxy(req, res);
     }).listen(config.localPort).on('listening', function() {
         
         logger.magenta().log(
@@ -27,4 +27,3 @@ proxyList.forEach(function(config) {
     });
 
 });
-

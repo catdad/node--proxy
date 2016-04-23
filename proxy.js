@@ -27,9 +27,8 @@ function proxy(scheme, hostName, port, method, pathWithQueryParams, headers) {
     return request;
 }
 
-
 module.exports = function(config) {
-    return function(req, res, next) {
+    return function(req, res) {
         var pathWithQueryParams = req.url;
 
         var headers = {};
@@ -48,7 +47,11 @@ module.exports = function(config) {
             headers
         );
 
-        requestToServer.on('error', next);
+        requestToServer.setNoDelay();
+
+        requestToServer.on('error', function(err) {
+            res.socket.close(res.socket.destroy.bind(res.socket));
+        });
 
         requestToServer.on('response', requestCompleted);
 
@@ -59,12 +62,8 @@ module.exports = function(config) {
         }
 
         function requestCompleted(responseFromServer) {
-            try {
-                res.writeHead(responseFromServer.statusCode, responseFromServer.statusMessage, responseFromServer.headers);
-                responseFromServer.pipe(res);
-            } catch(e) {
-                next(e);
-            }
+            res.writeHead(responseFromServer.statusCode, responseFromServer.statusMessage, responseFromServer.headers);
+            responseFromServer.pipe(res);
         }
     };
 };
