@@ -52,7 +52,7 @@ module.exports = function(config) {
         requestToServer.setNoDelay();
 
         requestToServer.on('error', function(err) {
-            res.socket.close(res.socket.destroy.bind(res.socket));
+            res.destroy();
         });
 
         requestToServer.on('response', requestCompleted);
