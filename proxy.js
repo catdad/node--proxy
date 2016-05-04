@@ -28,6 +28,8 @@ function proxy(scheme, hostName, port, method, pathWithQueryParams, headers) {
 }
 
 module.exports = function(config) {
+    var protocol = config.remoteProtocol === 'https' ? 'https' : 'http';
+    
     return function(req, res) {
         var pathWithQueryParams = req.url;
 
@@ -39,7 +41,7 @@ module.exports = function(config) {
         }
 
         var requestToServer = proxy(
-            'http',
+            protocol,
             config.remoteHost,
             config.remotePort,
             req.method,
