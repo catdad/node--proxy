@@ -11,6 +11,7 @@ A super simple proxy for when you need one in a pinch.
    ```json
    [{
         "localPort": 8888,
+        "remoteProtocol": "http",
         "remoteHost": "127.0.0.1",
         "remotePort": 80
    }]
